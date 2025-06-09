@@ -12,7 +12,12 @@ This project is a containerized microservices-based e-commerce application with 
 
 Each microservice is developed using Flask and exposed via REST APIs.
 
+### Clone the repository
 
+```
+git clone https://github.com/MulaBharathi/ecommerce-devops.git
+cd ecommerce-devops
+```
 
 ## 🐳 Docker: Build & Push
 

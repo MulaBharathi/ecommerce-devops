@@ -1,0 +1,13 @@
+global:
+  scrape_interval: 15s
+scrape_configs:
+  - job_name: 'order-service'
+    static_configs:
+      - targets: ['host.docker.internal:30001']
+  - job_name: 'product-service'
+    static_configs:
+      - targets: ['host.docker.internal:30002']
+  - job_name: 'user-service'
+    static_configs:
+      - targets: ['host.docker.internal:30003']
+

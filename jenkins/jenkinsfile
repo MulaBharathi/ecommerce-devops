@@ -1,0 +1,36 @@
+pipeline {
+    agent any
+
+    environment {
+        DOCKER_USER = 'bharu2703'
+    }
+
+    stages {
+        stage('Build Images') {
+            steps {
+                sh 'docker build -t $DOCKER_USER/order-service ./order-service'
+                sh 'docker build -t $DOCKER_USER/product-service ./product-service'
+                sh 'docker build -t $DOCKER_USER/user-service ./user-service'
+            }
+        }
+
+        stage('Push Images') {
+            steps {
+                withCredentials([usernamePassword(credentialsId: 'dockerhub-creds', usernameVariable: 'USER', passwordVariable: 'PASS')]) {
+                    sh 'echo $PASS | docker login -u $USER --password-stdin'
+                    sh 'docker push $DOCKER_USER/order-service'
+                    sh 'docker push $DOCKER_USER/product-service'
+                    sh 'docker push $DOCKER_USER/user-service'
+                }
+            }
+        }
+
+        stage('Deploy to Kubernetes') {
+            steps {
+                sh 'kubectl apply -f manifests/order-deployment.yaml'
+                sh 'kubectl apply -f manifests/product-deployment.yaml'
+                sh 'kubectl apply -f manifests/user-deployment.yaml'
+            }
+        }
+    }
+}

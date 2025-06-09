@@ -40,6 +40,10 @@ docker push bharu2703/product-service
 docker push bharu2703/order-service
 ```
 
+### Deployment
+Using Jenkins Pipeline
+The Jenkins pipeline automates building, pushing images, and deploying to Kubernetes. The pipeline script is in the jenkins/ director
+
 ## ☸️ Kubernetes Deployment
 Apply the manifests to deploy all services:
 
